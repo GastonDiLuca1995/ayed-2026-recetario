@@ -5,12 +5,12 @@ Repositorio del grupo. Partir de este esqueleto. No borrar la estructura de `src
 ## Integrantes
 
 | Nombre | Mail | GitHub |
-| --- | --- | --- |
-|  |  |  |
-|  |  |  |
+|Delfino, Kadyel|kadyeldelfino@gmail.com|kadyeldelfino-byte|
+|Di Luca, Gaston|gastonjuandiluca@gmail.com|GastonDiLuca1995|
+|Perez Cordoba, Micaela|cordobamica65@gmail.com|cordobamica65-max|
 |  |  |  |
 
-**Tema elegido:** Pokédex / Recetario / Biblioteca musical (dejar uno)
+**Tema elegido:** Recetario 
 
 ## Cómo ejecutar
 
