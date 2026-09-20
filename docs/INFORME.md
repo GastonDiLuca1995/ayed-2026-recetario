@@ -34,12 +34,22 @@ Cómo se relacionan catálogo, colección principal, pila y cola.
                                     Pila   Cola
                  (Historial de consultas)  (Recetas pendientes a preparar)
 
-## 3. Recursión (E2)
+## Recursión (E2)
 
-- Función:
-- Caso base:
-- Caso recursivo:
-- Traza de un ejemplo real del dataset:
+Función: `descomponer_recetas(recetario, id_receta)`
+Caso base: Si la receta no tiene sub-recetas (lista vacía), devuelve `[id_receta]`.
+Caso recursivo: Devuelve `[id_receta]` + las llamadas recursivas de cada una de sus dependencias.
+Traza para "Asado" (ID 9):
+Según la lista, la receta 9 depende de la 1 (Chimichurri) y de la 2 (Salsa Criolla).
+
+- Llamada 1: `descomponer_recetas(9)` -> tiene subrecetas (1 y 2)
+  -> devuelve `[9] + descomponer_recetas(1) + descomponer_recetas(2)`
+- Llamada 2: `descomponer_recetas(1)` -> NO tiene subrecetas (caso base)
+  -> devuelve `[1]`
+- Llamada 3: `descomponer_recetas(2)` -> NO tiene subrecetas (caso base)
+  -> devuelve `[2]`
+
+Resultado final: `[9] + [1] + [2] = [9, 1, 2]`
 
 ## 4. TADs (E3)
 
