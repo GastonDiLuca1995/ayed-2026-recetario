@@ -8,18 +8,18 @@ Mínimos: 8 casos escritos en E2; ejecutados en E3; 15 de regresión en E6 (pila
 
 | ID | Entrega | Acción (pasos en el CLI) | Datos | Resultado esperado | Resultado | Notas |
 | --- | --- | --- | --- | --- | --- | --- |
-| P01 | E1 | Arrancar el programa y listar catálogo | lista no vacía, sin error | no corrido | |
-| P02 | E1 | Elegir un ítem inexistente | id = -1 | mensaje claro, el menú sigue | no corrido | |
-| P03 | E2 | Operación recursiva sobre un ítem con cadena | id = 9 (Asado) | imprime la cadena completa: [9, 1, 2] | no corrido | |
-| P04 | E2 | Operación recursiva sobre un ítem sin derivados | id = 7 (Pesto) | solo el ítem: [7] (caso base) | no corrido | |
-| P05 | E2 | Ver el detalle de un ítem que existe | id = 12 (Locro) | muestra todos sus datos | no corrido | |
-| P06 | E2 | Ver el detalle de un ítem que NO existe | id = 99 | mensaje claro, no se corta el programa | no corrido | |
-| P07 | E2 | Elegir una opción de menú inválida | ingreso = "9z" | vuelve a mostrar el menú | no corrido | |
-| P08 | E2 | Pasar enter vacío en el menú | entrada vacía | no explota; vuelve a preguntar | no corrido | |
-| P09 | E3 | Agregar a la colección principal hasta el tope | equipo de 6 / equivalente | el séptimo falla con excepción propia | | |
-| P10 | E3 | Desapilar historial vacío | pila vacía | excepción propia, menú sigue | | |
-| P11 | E3 | Desencolar cola vacía | cola vacía | excepción propia, menú sigue | | |
-| P12 | E3 | Listar colección con el iterador | 2+ ítems | el orden coincide con las inserciones | | |
+| P01 | E1 | Arrancar el programa y listar catálogo | lista no vacía, sin error | no corrido | pasa |-|
+| P02 | E1 | Elegir un ítem inexistente | id = -1 | mensaje claro, el menú sigue | pasa |-|
+| P03 | E2 | Operación recursiva sobre un ítem con cadena | id = 9 (Asado) | imprime la cadena completa: [9, 1, 2] | pasa |-|
+| P04 | E2 | Operación recursiva sobre un ítem sin derivados | id = 7 (Pesto) | solo el ítem: [7] (caso base) | pasa |-|
+| P05 | E2 | Ver el detalle de un ítem que existe | id = 12 (Locro) | muestra todos sus datos | pasa |-|
+| P06 | E2 | Ver el detalle de un ítem que NO existe | id = 99 | mensaje claro, no se corta el programa | pasa |-|
+| P07 | E2 | Elegir una opción de menú inválida | ingreso = "9z" | vuelve a mostrar el menú | pasa |-|
+| P08 | E2 | Pasar enter vacío en el menú | entrada vacía | no explota; vuelve a preguntar | pasa |-|
+| P09 | E3 | Agregar a la colección principal hasta el tope | menú de 7 días | el octavo falla con excepción propia | pasa |-|
+| P10 | E3 | Desapilar historial vacío | pila vacía | excepción propia, menú sigue | pasa |-|
+| P11 | E3 | Desencolar cola vacía | cola vacía | excepción propia, menú sigue | pasa |-|
+| P12 | E3 | Listar colección con el iterador | 2+ ítems | el orden coincide con las inserciones | pasa |-|
 | P13 | E4 | Búsqueda lineal de un nombre que existe | | lo encuentra | | |
 | P14 | E4 | Búsqueda lineal de un nombre que no existe | | no encontrado, sin traceback | | |
 | P15 | E4 | Búsqueda binaria con catálogo desordenado | | avisa o reordena; no da un falso hit | | |

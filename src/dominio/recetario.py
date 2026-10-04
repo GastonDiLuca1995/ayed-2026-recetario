@@ -1,14 +1,14 @@
-from src.dominio.receta import Receta # Importamos la clase Receta desde nuestro otro archivo.
+from src.dominio.receta import Receta # Se importa la clase Receta desde nuestro otro archivo.
+from src.tads.lista_enlazada import ListaEnlazada # Se importa la clase ListaEnlazada para poder usarla en nuestro recetario.
 
 class Recetario: # Definimos la clase Recetario para crear nuestro catálogo completo.
-    def __init__(self): #Este es el constructor de la clase Recetario.
-        # Atributos de la clase Recetario, que son listas vacías que se llenarán.
-        self.recetas = [] 
-        self.ingredientes = []
-        self.subrecetas = []
+    def __init__(self): # Este es el constructor de la clase Recetario.
+        self.recetas = ListaEnlazada() # Se inicializa la lista de recetas como una lista enlazada vacía.
+        self.ingredientes = [] # Se inicializa la lista de ingredientes como una lista vacía.
+        self.subrecetas = [] # Se inicializa la lista de subrecetas como una lista vacía.
 
-    def cargar_datos(self):  # Método para cargar los datos en el recetario.
-        # Cargamos las recetas convirtiéndolas en Objetos.
+    def cargar_datos(self):  # Este método carga los datos de recetas, ingredientes y subrecetas en el recetario.
+        # Creamos una lista de diccionarios, cada uno representando una receta con sus atributos.
         lista_recetas = [
             {"id": 1, "nombre": "Chimichurri", "tiempo_min": 15, "dificultad": "baja", "categoria": "salsa"},
             {"id": 2, "nombre": "Salsa criolla", "tiempo_min": 20, "dificultad": "baja", "categoria": "salsa"},
@@ -41,9 +41,11 @@ class Recetario: # Definimos la clase Recetario para crear nuestro catálogo com
             {"id": 29, "nombre": "Curry de garbanzos", "tiempo_min": 40, "dificultad": "baja", "categoria": "principal"},
             {"id": 30, "nombre": "Risotto de hongos", "tiempo_min": 45, "dificultad": "alta", "categoria": "principal"}
         ]
-        for i in lista_recetas: # Inicializamos un bucle para recorrer la lista y crear objetos (Receta).
+        for i in lista_recetas: # Recorremos la lista de recetas y creamos un objeto Receta para cada diccionario, luego lo agregamos a la lista de recetas del recetario.
+            # Creamos un objeto Receta usando los datos del diccionario y lo agregamos a la lista de recetas del recetario.
             nueva_receta = Receta(i["id"], i["nombre"], i["tiempo_min"], i["dificultad"], i["categoria"])
-            self.recetas.append(nueva_receta) # Agregamos el objeto recién creado a la lista de recetas
+
+            self.recetas.insertar_al_final(nueva_receta) # Agregamos la nueva receta al final de la lista de recetas del recetario.
 
         # Listas de ingredientes
         self.ingredientes = [
@@ -179,15 +181,23 @@ class Recetario: # Definimos la clase Recetario para crear nuestro catálogo com
             {"id_receta": 27, "id_subreceta": 8},
             {"id_receta": 30, "id_subreceta": 3}
         ]
-    def buscar_recetas(self): # Este método devuelve la lista de recetas.
+    def buscar_recetas(self): # Este método devuelve la lista de recetas del recetario.
         return self.recetas
-    
-    def buscar_subrecetas(self, id_receta): # Este método devuelve una lista con los IDs de las subrecetas de una receta específica (Opcion 5).
-        lista_id = [] # Prepara una lista vacia para almacenar los IDs de las subrecetas.
-        for t in self.subrecetas: # Recorree la lista de subrecetas.
-            if t["id_receta"] == id_receta: # Verifica si el ID de la receta coincide con el ID proporcionado y lo agrega a la lista vacia.
-                lista_id.append(t["id_subreceta"])
-        return lista_id # Devuelve la lista de IDs de subrecetas asociadas a la receta especificada.
+
+    def buscar_subrecetas(self, id_receta): # Este método devuelve la lista de subrecetas de una receta específica, dado su ID.
+        lista_id = [] 
+        for t in self.subrecetas: # Recorremos la lista de subrecetas y verificamos si el ID de la receta coincide con el ID proporcionado.
+            if t["id_receta"] == id_receta: 
+                lista_id.append(t["id_subreceta"]) # Agregamos el ID de la subreceta a la lista de subrecetas de la receta.
+        return lista_id
+
+    def buscar_ingredientes(self, id_receta): # Este método devuelve la lista de ingredientes de una receta específica, dado su ID.
+        lista_ing = []
+        for ing in self.ingredientes: # Recorremos la lista de ingredientes y verificamos si el ID de la receta coincide con el ID proporcionado.
+            if ing["id_receta"] == id_receta:
+                texto = f"{ing['cantidad']} {ing['unidad']} de {ing['nombre']}"
+                lista_ing.append(texto) # Agregamos el ingrediente a la lista de ingredientes de la receta.
+        return lista_ing
 
     def descomponer_recetas(self, id_receta): # Función recursiva que devuelve una receta y todas sus dependencias.
         sub = self.buscar_subrecetas(id_receta)

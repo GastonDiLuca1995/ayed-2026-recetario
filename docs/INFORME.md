@@ -55,11 +55,15 @@ Resultado final: `[9] + [1] + [2] = [9, 1, 2]`
 
 | TAD | Operaciones | Invariante |
 | --- | --- | --- |
-| ListaEnlazada |  |  |
-| Pila |  |  |
-| Cola |  |  |
+| ListaEnlazada | `insertar_al_inicio`, `insertar_al_final`, `buscar`, `eliminar`, `tamanio`, `esta_vacia`, `__iter__` | `_tamanio >= 0`. Si `_tamanio == 0`, `_cabeza` es `None`. El último nodo apunta a `None`. |
+| Pila | `apilar`, `desapilar`, `ver_tope`, `esta_vacia` | LIFO. Los elementos ingresan y salen únicamente por el tope. Lanza excepción si se desapila estando vacía. |
+| Cola | `encolar`, `desencolar`, `ver_frente`, `esta_vacia` | FIFO. Ingresan exclusivamente por el final y salen por el frente. Lanza excepción si se desencola estando vacía. |
 
 Dónde se usa cada uno en el dominio.
+
+- ListaEnlazada: Es la estructura base para construir la Pila y la Cola. Dentro del dominio, se implementa para almacenar el catálogo principal de recetas (`recetario.py`) y para gestionar la colección con límite de capacidad de 7 platos en el `menu_semanal.py`.
+- Pila: Se utiliza para el Historial del sistema. Registra las interacciones del usuario (como listar el catálogo o consultar una receta específica) permitiendo deshacer acciones sacando siempre la última que se ingresó.
+- Cola: Se utiliza para gestionar la Cola de Preparación en la cocina. Los platos ingresan al final de la fila de espera y se atienden desde el frente, garantizando que el primero en pedirse sea el primero en cocinarse.
 
 ## 5. Complejidad (E4)
 
