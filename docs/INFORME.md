@@ -69,13 +69,25 @@ Dónde se usa cada uno en el dominio.
 
 | Operación | Tiempo | Espacio | Por qué |
 | --- | --- | --- | --- |
-|  |  |  |  |
+| Listar catálogo | $O(n)$ | $O(1)$ | Recorre los $n$ elementos de la colección una vez utilizando el iterador. |
+| Búsqueda lineal | $O(n)$ | $O(1)$ | En el peor caso, recorre y compara cada elemento uno por uno hasta llegar al final. |
+| Búsqueda binaria | $O(\log n)$ | $O(1)$ | Cada comparación divide el rango de búsqueda a la mitad, descartando el resto sistemáticamente. |
+| Ordenar por selección | $O(n^2)$ | $O(1)$ | Utiliza dos bucles anidados siempre, realizando $\approx n^2/2$ comparaciones sin importar si ya estaba ordenado. |
+| Ordenar por inserción | $O(n)$ mejor, $O(n^2)$ peor | $O(1)$ | Si ya está ordenado solo hace 1 comparación por elemento ($O(n)$); si está al revés, debe desplazar todos los elementos. |
+| Ver detalle de un ítem | $O(n)$ | $O(1)$ | Al utilizar una Lista Enlazada base, no hay acceso directo por índice; se requiere recorrer nodo por nodo. |
 
 Mediciones (`time.perf_counter`):
 
 | Operación | n | segundos |
 | --- | --- | --- |
-|  |  |  |
+| Búsqueda lineal (nombre) | 30 | 0.000019 |
+| Búsqueda lineal (nombre, x10) | 300 | 0.000012 |
+| Búsqueda binaria (nombre) | 30 | 0.000016 |
+| Búsqueda binaria (nombre, x10) | 300 | 0.000007 |
+| Ordenar por selección (nombre) | 30 | 0.000138 |
+| Ordenar por selección (nombre, x10) | 300 | 0.012182 |
+| Ordenar por inserción (nombre) | 30 | 0.000106 |
+| Ordenar por inserción (nombre, x10) | 300 | 0.010392 |
 
 ## 6. Persistencia (E5)
 
