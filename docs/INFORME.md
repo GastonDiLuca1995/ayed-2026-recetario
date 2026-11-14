@@ -5,42 +5,41 @@ Completar y hacer crecer en cada entrega. No hace falta prosa larga: oraciones c
 ## 1. Grupo y tema
 - Grupo: 6
 - Tema: Recetario
-- Por qué lo eligieron (5–8 líneas): Elegimos el tema del recetario ya que cocinar es algo cotidiano y nos parecio mas atractivo ya que contiene tres datasets para desarrollar aplicando los contenidos que veremos en clase.
+- Por qué lo eligieron (5–8 líneas): Elegimos el tema del recetario ya que cocinar es algo cotidiano y nos pareció más atractivo porque contiene tres datasets relacionados (recetas, ingredientes y subrecetas) para desarrollar aplicando los contenidos de la materia.
 
 ## 2. Modelo
 
 Qué es un ítem del catálogo. Qué es mutable y qué no (E1). Cómo se relacionan catálogo, colección principal, pila y cola.
 
--Item del catálogo: Es un diccionario guardado dentro de una lista. Cada diccionario representa una receta individual y organiza sus atributos ("id", "nombre", "tiempo_min", "dificultad" y "categoria") mediante pares clave-valor.
+- Ítem del catálogo: En la primera etapa se modeló como un diccionario y a partir de la Entrega 3 se representa mediante objetos de la clase Receta almacenados dentro de nuestra ListaEnlazada. Cada instancia organiza sus atributos ("id", "nombre", "tiempo_min", "dificultad" y "categoria").
+- Datos mutables: Las colecciones (ListaEnlazada de recetas, listas de ingredientes y subrecetas), los diccionarios y los atributos de las instancias de Receta son mutables, lo que permite agregar, modificar o dar de baja registros durante la ejecución del programa.
+- Datos inmutables: Los tipos de datos primarios que representan los valores atómicos son inmutables en memoria: números enteros (int para ID y tiempos de cocción) y cadenas de texto (str para nombres, dificultades, categorías e ingredientes).
 
-- Datos mutables: Las listas (Lista_recetas, Lista_ingredientes, Lista_subrecetas) y los diccionarios son estructuras mutables. Esto significa que pueden modificarse durante la ejecución del programa, ya sea agregando o eliminando recetas en las listas, o cambiando valores específicos en los diccionarios.
+Cómo se relacionan catálogo, colección principal, pila y cola:
 
-- Datos inmutables: Los datos primarios que funcionan como clave y valor son inmutables, ya que una vez creados en la memoria de la computadora no pueden modificarse. Esto incluye a los números enteros o integers (como los ID y tiempos de cocción) y a las cadenas de texto o strings (como los nombres, categorías e ingredientes).
+- Catálogo: Representa el inventario completo con todas las recetas cargadas en el sistema desde los archivos de persistencia.
+- Colección Principal: Subconjunto de recetas seleccionadas activamente por el usuario para planificar el Menú Semanal (con tope máximo de 7 días), además del soporte de ABM persistente sobre el catálogo.
+- Pila: Estructura LIFO (último en entrar, primero en salir) que registra el historial de acciones realizadas por el usuario, permitiendo deshacer la última operación.
+- Cola: Estructura FIFO (primero en entrar, primero en salir) utilizada para organizar los pedidos de cocina pendientes de elaborar en estricto orden de llegada.
 
-Cómo se relacionan catálogo, colección principal, pila y cola.
-
-- Catálogo: Representa el inventario completo con todas las recetas cargadas en el sistema.
-- Colección Principal: Subconjunto de recetas seleccionadas activamente por el usuario para planificar el menú de la semana.
-- Pila: Estructura LIFO (último en entrar, primero en salir) que registra las últimas recetas consultadas o agregadas al menú, permitiendo volver atrás o deshacer la última acción.
-- Cola: Estructura FIFO (primero en entrar, primero en salir) utilizada para organizar las preparaciones pendientes de elaborar en estricto orden de llegada.
-
-                            Catálogo(Todas las recetas disponibles)
+                            Catálogo (Todas las recetas disponibles)
                                         |
                                         ▼
-                            Colección Principal(Menú Semanal)
+                            Colección Principal (Menú Semanal)
                                         |
                                      ┌──┴──┐
                                      ▼     ▼
                                     Pila   Cola
                  (Historial de consultas)  (Recetas pendientes a preparar)
 
-## Recursión (E2)
+## 3. Recursión (E2)
 
-Función: `descomponer_recetas(recetario, id_receta)`
-Caso base: Si la receta no tiene sub-recetas (lista vacía), devuelve `[id_receta]`.
-Caso recursivo: Devuelve `[id_receta]` + las llamadas recursivas de cada una de sus dependencias.
+Función: `descomponer_recetas(self, id_receta)`
+Caso base: Si la receta no tiene sub-recetas asociadas (lista vacía), devuelve `[id_receta]`.
+Caso recursivo: Devuelve `[id_receta]` concatenado con el resultado de las llamadas recursivas de cada una de sus sub-recetas dependientes.
+
 Traza para "Asado" (ID 9):
-Según la lista, la receta 9 depende de la 1 (Chimichurri) y de la 2 (Salsa Criolla).
+Según el dataset de subrecetas, la receta 9 depende de la 1 (Chimichurri) y de la 2 (Salsa criolla).
 
 - Llamada 1: `descomponer_recetas(9)` -> tiene subrecetas (1 y 2)
   -> devuelve `[9] + descomponer_recetas(1) + descomponer_recetas(2)`
@@ -55,26 +54,26 @@ Resultado final: `[9] + [1] + [2] = [9, 1, 2]`
 
 | TAD | Operaciones | Invariante |
 | --- | --- | --- |
-| ListaEnlazada | `insertar_al_inicio`, `insertar_al_final`, `buscar`, `eliminar`, `tamanio`, `esta_vacia`, `__iter__` | `_tamanio >= 0`. Si `_tamanio == 0`, `_cabeza` es `None`. El último nodo apunta a `None`. |
-| Pila | `apilar`, `desapilar`, `ver_tope`, `esta_vacia` | LIFO. Los elementos ingresan y salen únicamente por el tope. Lanza excepción si se desapila estando vacía. |
-| Cola | `encolar`, `desencolar`, `ver_frente`, `esta_vacia` | FIFO. Ingresan exclusivamente por el final y salen por el frente. Lanza excepción si se desencola estando vacía. |
+| ListaEnlazada | `insertar_al_inicio`, `insertar_al_final`, `buscar`, `eliminar`, `tamanio`, `esta_vacia`, `__iter__` | `_tamanio >= 0`. Si `_tamanio == 0`, `_cabeza` es `None`. El último nodo apunta siempre a `None`. |
+| Pila | `apilar`, `desapilar`, `ver_tope`, `esta_vacia` | LIFO. Los elementos ingresan y salen únicamente por el tope (`_cabeza`). Lanza `PilaVaciaError` si se desapila estando vacía. |
+| Cola | `encolar`, `desencolar`, `ver_frente`, `esta_vacia` | FIFO. Los elementos ingresan por el final y salen por el frente (`_cabeza`). Lanza `ColaVaciaError` si se desencola estando vacía. |
 
-Dónde se usa cada uno en el dominio.
+Dónde se usa cada uno en el dominio:
 
-- ListaEnlazada: Es la estructura base para construir la Pila y la Cola. Dentro del dominio, se implementa para almacenar el catálogo principal de recetas (`recetario.py`) y para gestionar la colección con límite de capacidad de 7 platos en el `menu_semanal.py`.
-- Pila: Se utiliza para el Historial del sistema. Registra las interacciones del usuario (como listar el catálogo o consultar una receta específica) permitiendo deshacer acciones sacando siempre la última que se ingresó.
-- Cola: Se utiliza para gestionar la Cola de Preparación en la cocina. Los platos ingresan al final de la fila de espera y se atienden desde el frente, garantizando que el primero en pedirse sea el primero en cocinarse.
+- ListaEnlazada: Es la estructura base sobre la que se construyen la Pila y la Cola. En el dominio se utiliza para almacenar el catálogo principal de recetas y para gestionar la colección con tope de 7 platos del Menú Semanal.
+- Pila: Se utiliza en la clase Historial para registrar las acciones del usuario y deshacer siempre la última operación realizada.
+- Cola: Se utiliza en la clase ColaPreparacion para encolar pedidos en la cocina y atenderlos en orden de llegada.
 
 ## 5. Complejidad (E4)
 
 | Operación | Tiempo | Espacio | Por qué |
 | --- | --- | --- | --- |
-| Listar catálogo | $O(n)$ | $O(1)$ | Recorre los $n$ elementos de la colección una vez utilizando el iterador. |
-| Búsqueda lineal | $O(n)$ | $O(1)$ | En el peor caso, recorre y compara cada elemento uno por uno hasta llegar al final. |
-| Búsqueda binaria | $O(\log n)$ | $O(1)$ | Cada comparación divide el rango de búsqueda a la mitad, descartando el resto sistemáticamente. |
-| Ordenar por selección | $O(n^2)$ | $O(1)$ | Utiliza dos bucles anidados siempre, realizando $\approx n^2/2$ comparaciones sin importar si ya estaba ordenado. |
-| Ordenar por inserción | $O(n)$ mejor, $O(n^2)$ peor | $O(1)$ | Si ya está ordenado solo hace 1 comparación por elemento ($O(n)$); si está al revés, debe desplazar todos los elementos. |
-| Ver detalle de un ítem | $O(n)$ | $O(1)$ | Al utilizar una Lista Enlazada base, no hay acceso directo por índice; se requiere recorrer nodo por nodo. |
+| Listar catálogo | $O(n)$ | $O(1)$ | Recorre los $n$ elementos de la colección una sola vez mediante el iterador. |
+| Búsqueda lineal | $O(n)$ | $O(1)$ | En el peor caso compara cada elemento secuencialmente hasta llegar al final. |
+| Búsqueda binaria | $O(\log n)$ | $O(1)$ | En cada paso divide el espacio de búsqueda a la mitad sobre la colección ordenada. |
+| Ordenar por selección | $O(n^2)$ | $O(1)$ | Utiliza dos bucles anidados realizando siempre $\approx n^2/2$ comparaciones. |
+| Ordenar por inserción | $O(n)$ mejor, $O(n^2)$ peor | $O(1)$ | Si ya está ordenado realiza una comparación por elemento; en orden inverso desplaza todos los anteriores. |
+| Ver detalle de un ítem | $O(n)$ | $O(1)$ | Al estar sobre una ListaEnlazada, recorre nodo por nodo hasta encontrar el ID buscado. |
 
 Mediciones (`time.perf_counter`):
 
@@ -91,9 +90,18 @@ Mediciones (`time.perf_counter`):
 
 ## 6. Persistencia (E5)
 
-- Layout del registro binario (campos, `struct`, anchos):
-- Header:
-- Cómo se actualiza un registro por posición:
+- **Layout del registro binario (campos, `struct`, anchos):** Se utiliza `struct.Struct("<I 30s H 10s 15s")`, lo que genera registros de longitud fija de **61 bytes** en formato little-endian (`<`):
+  - `id`: `I` (unsigned int, 4 bytes).
+  - `nombre`: `30s` (cadena UTF-8 de 30 bytes fijos).
+  - `tiempo_min`: `H` (unsigned short, 2 bytes).
+  - `dificultad`: `10s` (cadena UTF-8 de 10 bytes fijos).
+  - `categoria`: `15s` (cadena UTF-8 de 15 bytes fijos).
+  - Las cadenas de texto se codifican en UTF-8 y se ajustan al ancho fijo truncando o rellenando con bytes nulos (`\x00`) a la derecha; al leer se eliminan los `\x00` finales con `rstrip(b"\x00")`.
+- **Header:** Se utiliza `struct.Struct("<4s 1s I")` de **9 bytes** totales:
+  - `magia`: `4s` con el valor fijo `b"AYED"` (4 bytes) para validar que el archivo pertenece al sistema.
+  - `tema`: `1s` con el valor `b"R"` (1 byte) correspondiente a Recetario.
+  - `cantidad`: `I` (unsigned int, 4 bytes) que indica el total de registros almacenados.
+- **Cómo se actualiza un registro por posición:** Mediante la función `actualizar_registro(ruta, posicion, item)` abriendo el archivo en modo lectura/escritura binaria (`"r+b"`). Como todos los registros miden exactamente lo mismo, se calcula el desplazamiento exacto con `seek(HEADER.size + posicion * FORMATO.size)` (es decir, $9 + \text{posicion} \times 61$ bytes) y se sobrescribe únicamente ese registro en tiempo constante $O(1)$ (acceso directo), sin reescribir el resto del archivo. Por ejemplo, el registro en la posición 7 comienza exactamente en el byte 436. El alta posiciona el cursor al final con `seek(0, 2)`, agrega el nuevo registro y actualiza el contador del header en el byte 0; la baja elimina el registro y reescribe los restantes actualizando la cabecera para no dejar huecos.
 
 ## 7. Reparto de trabajo (E6)
 
