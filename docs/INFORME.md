@@ -107,4 +107,6 @@ Mediciones (`time.perf_counter`):
 
 | Integrante | Qué hizo | Qué puede defender |
 | --- | --- | --- |
-|  |  |  |
+| Di Luca, Gastón | Desarrollo del código fuente (TADs, algoritmos, dominio, persistencia), integración del menú CLI y redacción técnica de la documentación. | **Todo el repositorio**. (Invariantes de TADs, traza de recursión, layout binario y `seek`, cálculo de complejidad y manejo de excepciones). |
+| Delfino, Kadyel | Participación en la etapa inicial del proyecto. | (No participa de la defensa oral). |
+| Perez Cordoba, Micaela | Participación general durante el desarrollo del proyecto. | (No participa de la defensa oral). |

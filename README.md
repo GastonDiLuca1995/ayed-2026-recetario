@@ -1,45 +1,33 @@
-# TP integrador — AyED C2 2026
+# AYED C2 2026 - Recetario - Grupo 6
 
-Repositorio del grupo. Partir de este esqueleto. No borrar la estructura de `src/` ni de `docs/`.
+**Integrantes:**
+* Delfino, Kadyel (kadyeldelfino-byte)
+* Di Luca, Gastón (GastonDiLuca1995)
+* Perez Cordoba, Micaela (cordobamica65-max)
 
-## Integrantes
+## Tema
+Gestor de catálogo gastronómico (Recetario) con dependencias entre sub-recetas e ingredientes.
 
-| Nombre | Mail | GitHub |
-|Delfino, Kadyel|kadyeldelfino@gmail.com|kadyeldelfino-byte|
-|Di Luca, Gaston|gastonjuandiluca@gmail.com|GastonDiLuca1995|
-|Perez Cordoba, Micaela|cordobamica65@gmail.com|cordobamica65-max|
-|  |  |  |
+## Cómo ejecutarlo
+Requiere Python 3.10+ (solo biblioteca estándar, sin dependencias externas). Desde la raíz del repositorio, ejecutar:
+`python -m src.main`
+*(En Windows, si `python` no está en el PATH, utilizar `py -3 -m src.main`)*
 
-**Tema elegido:** Recetario 
+## Qué hace
+Sistema de gestión por consola que implementa las 10 operaciones requeridas:
+1. Listado completo mediante iterador propio.
+2. Detalle individual de recetas e ingredientes.
+3. Búsqueda iterativa (Lineal) y particional (Binaria).
+4. Ordenamiento de catálogo (Selección e Inserción).
+5. Desglose recursivo de sub-recetas.
+6. Planificación de Menú Semanal (tope 7 días) y ABM de catálogo.
+7. Historial de acciones (Pila - LIFO) con función deshacer.
+8. Gestión de comandas de cocina (Cola - FIFO).
+9. Persistencia de datos secuencial (.csv) y de acceso directo (.bin) con módulo `struct`.
+0. Cierre seguro de sesión.
 
-## Cómo ejecutar
-
-Desde la raíz del repo, con Python 3.10 o superior:
-
-```text
-python -m src.main
-```
-
-En Windows, si `python` no anda: `py -3 -m src.main`.
-
-Solo biblioteca estándar. No hay `requirements.txt` a propósito.
-
-## Entregas
-
-Cada vencimiento se marca con un tag. Ver `GIT.md`.
-
-| Tag | Vence |
-| --- | --- |
-| `preentrega` (opcional, solo repo) | domingo 30-ago-2026 23:59 |
-| `entrega-1` | domingo 06-sep-2026 23:59 |
-| `entrega-2` | domingo 20-sep-2026 23:59 |
-| `entrega-3` | domingo 04-oct-2026 23:59 |
-| `entrega-4` | domingo 01-nov-2026 23:59 |
-| `entrega-5` | domingo 15-nov-2026 23:59 |
-| `entrega-6` | domingo 22-nov-2026 23:59 |
-
-Defensa oral (reemplaza el 2do parcial): 25 y 27-nov-2026.
-
-La cátedra corrige el **tag**, no el último commit suelto de `main`.
-
-El grupo se avisa por mail a diego.ambrossio@unab.edu.ar **y** angel.bianco@unab.edu.ar. Ver `GIT.md`.
+## Limitaciones conocidas
+* **Interfaz:** El sistema no cuenta con interfaz gráfica (GUI) ni base de datos externa; opera exclusivamente en terminal (CLI) usando la biblioteca estándar de Python.
+* **Truncamiento de texto:** Debido a la persistencia en formato binario con registros de tamaño fijo (`struct`), los nombres de recetas que superen los 30 caracteres (o 15 para la categoría) se recortarán automáticamente al guardarse en disco.
+* **Bajas en tiempo O(n):** Mientras que la actualización de un registro binario se hace con acceso directo en tiempo O(1) mediante `seek`, la eliminación (baja) requiere reescribir todo el archivo secuencialmente para evitar dejar huecos.
+* **Tope de planificación:** La colección del Menú Semanal está estrictamente limitada a 7 días. Si se intenta superar este tope, el sistema bloquea la carga.
